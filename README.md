@@ -7,7 +7,7 @@ Sacred Skirmish is a 1v1 strategy game I am currently developing. It will be set
 This is the very first prototype of the game, and thus only has the bare minimum features required to allow the game to function. Note that since there is no proper matchmaking system, the game not realistically available to play yet.
 
 New Mechanics:
-- Basic multipplayer functionality (untested)
+- Basic multiplayer functionality (untested)
 - Unit tier system
 - Two new buildings:
     - Marketplace: Increases money per turn by $100
