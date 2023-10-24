@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://dtpkvnewkcag5"]
+
+[ext_resource type="PackedScene" uid="uid://bsndc66cvpkpj" path="res://Units/unit.tscn" id="1_qtssp"]
+[ext_resource type="Texture2D" uid="uid://blt6amuhu7imq" path="res://Units/War/Tier 2/blood_shaman.png" id="2_nka8v"]
+[ext_resource type="Script" path="res://Units/War/Tier 2/blood_shaman.gd" id="2_wa82c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwufj"]
+atlas = ExtResource("2_nka8v")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6oi7"]
+atlas = ExtResource("2_nka8v")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrkr3"]
+atlas = ExtResource("2_nka8v")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf045"]
+atlas = ExtResource("2_nka8v")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hll3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwufj")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_e6oi7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrkr3")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_lf045")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[node name="Blood Shaman" instance=ExtResource("1_qtssp")]
+script = ExtResource("2_wa82c")
+tier = 2
+atk = 10
+hp = 30
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -19)
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -19)
+
+[node name="SelectSprite" parent="." index="3"]
+position = Vector2(0, 0)
+frame = 4
+frame_progress = 1.0
+
+[node name="CharacterSprite" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_0hll3")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="PointLight2D" parent="." index="5"]
+position = Vector2(0, 16)
+
+[editable path="Hitbox"]

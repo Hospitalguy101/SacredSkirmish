@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://cchda5qx3raat"]
+
+[ext_resource type="Script" path="res://UI/unit_menu.gd" id="1_pfoio"]
+
+[node name="Unit Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_pfoio")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 805.0
+offset_top = 8.0
+offset_right = 951.0
+offset_bottom = 253.0
+
+[node name="WorkerButton" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy Worker ($50)"
+
+[node name="Tier1Button" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy Tier 1 ($300)"
+
+[node name="Tier2Button" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy Tier 2 ($800)"
+
+[node name="Tier3Button" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Buy Tier 3 ($1500)"
+
+[connection signal="pressed" from="GridContainer/WorkerButton" to="." method="_on_worker_button_pressed"]
+[connection signal="pressed" from="GridContainer/Tier1Button" to="." method="_on_tier_1_button_pressed"]
+[connection signal="pressed" from="GridContainer/Tier2Button" to="." method="_on_tier_2_button_pressed"]
+[connection signal="pressed" from="GridContainer/Tier3Button" to="." method="_on_tier_3_button_pressed"]

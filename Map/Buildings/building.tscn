@@ -1,0 +1,142 @@
+[gd_scene load_steps=18 format=3 uid="uid://bb0sg48vyodb"]
+
+[ext_resource type="Script" path="res://Map/Buildings/building.gd" id="1_6un1o"]
+[ext_resource type="Texture2D" uid="uid://befgf46dpa4ot" path="res://icon.svg" id="1_n3knt"]
+[ext_resource type="Texture2D" uid="uid://d1i8vmdivt6kd" path="res://Units/selected.png" id="3_0y2yx"]
+[ext_resource type="PackedScene" uid="uid://dl6x5ghpq2vt2" path="res://Hitboxes Hurtboxes/hitbox.tscn" id="4_mbstb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pf1d4"]
+size = Vector2(95, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gm4p"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itot3"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ft85"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mken"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpi3s"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7eqf"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jent"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x6ya"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2erts"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eia7l"]
+atlas = ExtResource("3_0y2yx")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwqga"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gm4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itot3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ft85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mken")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpi3s")
+}],
+"loop": false,
+"name": &"deselect",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7eqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jent")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0x6ya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2erts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eia7l")
+}],
+"loop": false,
+"name": &"select",
+"speed": 30.0
+}]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6ibvx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
+[node name="Building" type="StaticBody2D" groups=["Building"]]
+script = ExtResource("1_6un1o")
+
+[node name="Constructed" type="Node2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Constructed"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_pf1d4")
+
+[node name="SelectSprite" type="AnimatedSprite2D" parent="Constructed"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_kwqga")
+animation = &"deselect"
+
+[node name="Sprite2D" type="Sprite2D" parent="Constructed"]
+texture = ExtResource("1_n3knt")
+
+[node name="Hitbox" parent="Constructed" instance=ExtResource("4_mbstb")]
+
+[node name="Under Contruction" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Under Contruction"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_pf1d4")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Under Contruction"]
+texture = ExtResource("1_n3knt")
+
+[node name="Hitbox" parent="Under Contruction" instance=ExtResource("4_mbstb")]
+
+[node name="CollisionShape2D" parent="Under Contruction/Hitbox" index="0"]
+disabled = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_6ibvx")
+
+[connection signal="input_event" from="Constructed/Hitbox" to="." method="_on_hitbox_input_event"]
+[connection signal="input_event" from="Under Contruction/Hitbox" to="." method="_on_hitbox_input_event"]
+
+[editable path="Constructed/Hitbox"]
+[editable path="Under Contruction/Hitbox"]

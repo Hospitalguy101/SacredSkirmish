@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://bxk26fnxnoeda"]
+
+[ext_resource type="Texture2D" uid="uid://btpp0vlapyew8" path="res://Map/red_tower.png" id="1_7ucp4"]
+[ext_resource type="Script" path="res://Map/tower.gd" id="1_u57dm"]
+[ext_resource type="PackedScene" uid="uid://dl6x5ghpq2vt2" path="res://Hitboxes Hurtboxes/hitbox.tscn" id="2_qxgs7"]
+[ext_resource type="Texture2D" uid="uid://dgayhtpwjfbsl" path="res://Map/tiles.png" id="4_qmvop"]
+[ext_resource type="Texture2D" uid="uid://bqeq8xm4ggu3e" path="res://UI/Light.png" id="5_6mib7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d4u7h"]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hhyj3"]
+light_mode = 2
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7w8my"]
+radius = 16.0
+height = 62.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aby0p"]
+atlas = ExtResource("4_qmvop")
+region = Rect2(96, 0, 32, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oaho"]
+atlas = ExtResource("4_qmvop")
+region = Rect2(32, 0, 32, 2)
+
+[node name="Tower" type="StaticBody2D" groups=["Tower"]]
+material = SubResource("CanvasItemMaterial_d4u7h")
+script = ExtResource("1_u57dm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_hhyj3")
+scale = Vector2(2, 2)
+texture = ExtResource("1_7ucp4")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_qxgs7")]
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_7w8my")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-0.00290877, -3.89291)
+rotation = 1.5708
+scale = Vector2(1.84054, 1.98443)
+polygon = PackedVector2Array(4, -16, -11, -16, -11, -4, -20, -4, -26, 1.1365e-06, -26, 1, -20, 4, -11, 4, -11, 16, 4, 16, 8, 13, 10, 9, 11, 5, 11, -5, 10, -9, 8, -13)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -16.0
+offset_top = 18.0
+offset_right = 16.0
+offset_bottom = 20.0
+texture_under = SubResource("AtlasTexture_aby0p")
+texture_progress = SubResource("AtlasTexture_2oaho")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 2.0
+blend_mode = 2
+texture = ExtResource("5_6mib7")
+texture_scale = 50.0
+
+[editable path="Hitbox"]

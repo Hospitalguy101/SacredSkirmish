@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://bsndc66cvpkpj"]
+
+[ext_resource type="Script" path="res://Units/unit.gd" id="1_hk70y"]
+[ext_resource type="PackedScene" uid="uid://dl6x5ghpq2vt2" path="res://Hitboxes Hurtboxes/hitbox.tscn" id="2_lc3d3"]
+
+[sub_resource type="Gradient" id="Gradient_ylr13"]
+offsets = PackedFloat32Array(0.967742, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r58ev"]
+gradient = SubResource("Gradient_ylr13")
+fill_to = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xvig"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b64xe"]
+size = Vector2(68, 68)
+
+[sub_resource type="Gradient" id="Gradient_7dmj8"]
+offsets = PackedFloat32Array(0, 0.0193548)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_78uxj"]
+gradient = SubResource("Gradient_7dmj8")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pa6rk"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
+[node name="Unit" type="CharacterBody2D" groups=["Unit"]]
+script = ExtResource("1_hk70y")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_r58ev")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_lc3d3")]
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_1xvig")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_b64xe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_78uxj")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pa6rk")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="input_event" from="Hitbox" to="." method="_on_hitbox_input_event"]
+[connection signal="mouse_entered" from="Hitbox" to="." method="_on_hitbox_mouse_entered"]
+[connection signal="mouse_exited" from="Hitbox" to="." method="_on_hitbox_mouse_exited"]
+
+[editable path="Hitbox"]

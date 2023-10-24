@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://br0egwixd02fg"]
+
+[ext_resource type="PackedScene" uid="uid://bb0sg48vyodb" path="res://Map/Buildings/building.tscn" id="1_ecver"]
+[ext_resource type="Script" path="res://Map/Buildings/marketplace.gd" id="2_4qmk0"]
+[ext_resource type="Texture2D" uid="uid://sp88ies0j460" path="res://Map/Buildings/marketplace.png" id="2_p2kkx"]
+[ext_resource type="Texture2D" uid="uid://btfgeoh1u4qx7" path="res://Map/Buildings/c_marketplace.png" id="4_ux4mu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2paxm"]
+size = Vector2(52, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7m63"]
+size = Vector2(46, 29)
+
+[node name="Marketplace" instance=ExtResource("1_ecver")]
+collision_layer = 0
+script = ExtResource("2_4qmk0")
+cost = 200
+
+[node name="Constructed" parent="." index="0"]
+visible = true
+
+[node name="CollisionShape2D" parent="Constructed" index="0"]
+position = Vector2(-1, -19)
+
+[node name="SelectSprite" parent="Constructed" index="1"]
+position = Vector2(0, 10)
+
+[node name="Sprite2D" parent="Constructed" index="2"]
+position = Vector2(0, -24)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_p2kkx")
+
+[node name="CollisionShape2D" parent="Constructed/Hitbox" index="0"]
+position = Vector2(-1, -19)
+shape = SubResource("RectangleShape2D_2paxm")
+
+[node name="CollisionShape2D" parent="Under Contruction" index="0"]
+position = Vector2(0, 1.5)
+
+[node name="Sprite2D" parent="Under Contruction" index="1"]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_ux4mu")
+
+[node name="CollisionShape2D" parent="Under Contruction/Hitbox" index="0"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_u7m63")
+
+[editable path="Constructed/Hitbox"]
+[editable path="Under Contruction/Hitbox"]

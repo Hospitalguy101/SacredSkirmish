@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmmghi8qelb3o"]
+
+[ext_resource type="PackedScene" uid="uid://bsndc66cvpkpj" path="res://Units/unit.tscn" id="1_75frc"]
+[ext_resource type="Script" path="res://Units/War/Tier 3/siege_machine.gd" id="2_insln"]
+[ext_resource type="Texture2D" uid="uid://bg254ncucexl8" path="res://Units/War/Tier 3/siege_machine.png" id="3_mikcc"]
+[ext_resource type="Texture2D" uid="uid://bf8koa5o6b00u" path="res://UI/aura.png" id="4_kucf7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef70r"]
+atlas = ExtResource("3_mikcc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrnjq"]
+atlas = ExtResource("3_mikcc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efqfd"]
+atlas = ExtResource("3_mikcc")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4qhd"]
+atlas = ExtResource("3_mikcc")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bmkfa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ef70r")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_jrnjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efqfd")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_e4qhd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[node name="Siege Machine" instance=ExtResource("1_75frc")]
+script = ExtResource("2_insln")
+tier = 3
+atk = 0
+hp = 80
+vision = 7
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -18)
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -18)
+
+[node name="SelectSprite" parent="." index="3"]
+position = Vector2(0, 0)
+frame = 4
+frame_progress = 1.0
+
+[node name="CharacterSprite" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_bmkfa")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="PointLight2D" parent="." index="5"]
+texture_scale = 50.0
+
+[node name="Aura" type="Sprite2D" parent="." index="6"]
+scale = Vector2(3, 3)
+texture = ExtResource("4_kucf7")
+
+[editable path="Hitbox"]

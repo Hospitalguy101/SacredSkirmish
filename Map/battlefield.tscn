@@ -1,0 +1,134 @@
+[gd_scene load_steps=15 format=3 uid="uid://dc0j1s6ywt4kk"]
+
+[ext_resource type="Script" path="res://Map/battlefield.gd" id="1_deur6"]
+[ext_resource type="Texture2D" uid="uid://c48phpm4rngh3" path="res://UI/black.png" id="2_3msg1"]
+[ext_resource type="Script" path="res://Map/MainCamera.gd" id="4_td28t"]
+[ext_resource type="Script" path="res://Map/VisibilityMap.gd" id="5_8wtvv"]
+[ext_resource type="PackedScene" uid="uid://cadv4tubc7kg6" path="res://UI/char_ui.tscn" id="5_ihmej"]
+[ext_resource type="Script" path="res://UI/Label.gd" id="6_p4qf1"]
+[ext_resource type="Script" path="res://UI/MouseRaycast.gd" id="7_d4d3t"]
+[ext_resource type="Script" path="res://Map/Terrain.gd" id="8_6ds4e"]
+[ext_resource type="Texture2D" uid="uid://dgayhtpwjfbsl" path="res://Map/tiles.png" id="8_8emut"]
+[ext_resource type="PackedScene" uid="uid://esey1t087n44" path="res://UI/build_menu.tscn" id="11_5etfk"]
+[ext_resource type="PackedScene" uid="uid://cchda5qx3raat" path="res://UI/unit_menu.tscn" id="11_q2ohj"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_anexv"]
+texture = ExtResource("2_3msg1")
+texture_region_size = Vector2i(64, 16)
+0:0/0 = 0
+2:0/0 = 0
+4:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6d2ak"]
+texture = ExtResource("8_8emut")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_i4cln"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_anexv")
+sources/1 = SubResource("TileSetAtlasSource_6d2ak")
+
+[node name="Battlefield" type="Node2D"]
+script = ExtResource("1_deur6")
+
+[node name="Terrain" type="TileMap" parent="."]
+position = Vector2(-800, -800)
+tile_set = SubResource("TileSet_i4cln")
+format = 2
+script = ExtResource("8_6ds4e")
+
+[node name="Holy Sites" type="Node2D" parent="."]
+
+[node name="Border" type="Node2D" parent="."]
+
+[node name="Left" type="Line2D" parent="Border"]
+points = PackedVector2Array(-800, -810, -800, 810)
+
+[node name="Top" type="Line2D" parent="Border"]
+position = Vector2(0, -5)
+points = PackedVector2Array(-800, -800, 800, -800)
+
+[node name="Bottom" type="Line2D" parent="Border"]
+position = Vector2(0, 5)
+points = PackedVector2Array(-800, 800, 800, 800)
+
+[node name="Right" type="Line2D" parent="Border"]
+points = PackedVector2Array(800, -810, 800, 810)
+
+[node name="VisibilityMap" type="TileMap" parent="."]
+position = Vector2(-800, -800)
+tile_set = SubResource("TileSet_i4cln")
+format = 2
+script = ExtResource("5_8wtvv")
+
+[node name="Units" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Buildings" type="Node2D" parent="."]
+
+[node name="MainCamera" type="Camera2D" parent="."]
+limit_left = -800
+limit_top = -795
+limit_right = 795
+limit_bottom = 800
+script = ExtResource("4_td28t")
+min = 0.8
+
+[node name="UILayer" type="CanvasLayer" parent="MainCamera"]
+
+[node name="CharUI" parent="MainCamera/UILayer" instance=ExtResource("5_ihmej")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -960.0
+offset_top = 380.0
+offset_right = -960.0
+offset_bottom = 380.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="EndTurnButton" type="Button" parent="MainCamera/UILayer"]
+offset_left = 869.0
+offset_top = 500.0
+offset_right = 949.0
+offset_bottom = 531.0
+text = "End Turn"
+
+[node name="Label" type="Label" parent="MainCamera/UILayer"]
+offset_right = 102.0
+offset_bottom = 33.0
+text = "Money: 0$"
+script = ExtResource("6_p4qf1")
+
+[node name="Build Menu" parent="MainCamera/UILayer" instance=ExtResource("11_5etfk")]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -204.0
+offset_top = -80.0
+offset_right = 204.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Unit Menu" parent="MainCamera/UILayer" instance=ExtResource("11_q2ohj")]
+visible = false
+
+[node name="MouseRaycast" type="RayCast2D" parent="."]
+exclude_parent = false
+target_position = Vector2(0, 0)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("7_d4d3t")
+
+[connection signal="pressed" from="MainCamera/UILayer/EndTurnButton" to="." method="_on_end_turn_button_pressed"]

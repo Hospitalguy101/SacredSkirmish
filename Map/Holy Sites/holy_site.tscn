@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dla5tdbhh2s0q"]
+
+[ext_resource type="Texture2D" uid="uid://b5h46cq81lvbv" path="res://Map/Holy Sites/production_site.png" id="1_njmdy"]
+[ext_resource type="Script" path="res://Map/Holy Sites/holy_site.gd" id="1_vy4v5"]
+[ext_resource type="Texture2D" uid="uid://bqeq8xm4ggu3e" path="res://UI/Light.png" id="3_bebuy"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pyar2"]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t0a3q"]
+light_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vi51r"]
+size = Vector2(17, 20)
+
+[node name="Holy Site" type="StaticBody2D" groups=["Holy Site"]]
+material = SubResource("CanvasItemMaterial_pyar2")
+scale = Vector2(2, 2)
+script = ExtResource("1_vy4v5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_t0a3q")
+texture = ExtResource("1_njmdy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.01332e-07, 13.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_vi51r")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+energy = 2.0
+blend_mode = 2
+texture = ExtResource("3_bebuy")
+texture_scale = 30.0

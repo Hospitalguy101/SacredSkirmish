@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6xvw2bu8xey1"]
+
+[ext_resource type="PackedScene" uid="uid://bsndc66cvpkpj" path="res://Units/unit.tscn" id="1_kjilm"]
+[ext_resource type="Script" path="res://Units/War/Tier 1/Marauder.gd" id="2_qr5px"]
+[ext_resource type="Texture2D" uid="uid://d11fx0x1lbigs" path="res://Units/War/Tier 1/marauder.png" id="3_jd0v0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghynl"]
+atlas = ExtResource("3_jd0v0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5eoaa"]
+atlas = ExtResource("3_jd0v0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lapmu"]
+atlas = ExtResource("3_jd0v0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvm7r"]
+atlas = ExtResource("3_jd0v0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5olui"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghynl")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_5eoaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lapmu")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_mvm7r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[node name="Marauder" instance=ExtResource("1_kjilm")]
+script = ExtResource("2_qr5px")
+tier = 1
+atk = 8
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(3, -19)
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(2.5, -19)
+
+[node name="SelectSprite" parent="." index="3"]
+position = Vector2(0, 0)
+frame = 4
+frame_progress = 1.0
+
+[node name="CharacterSprite" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_5olui")
+animation = &"idle"
+autoplay = "idle"
+
+[editable path="Hitbox"]
