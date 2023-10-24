@@ -23,6 +23,7 @@ New Mechanics:
 - Terrain modifiers
 - Additional faction
 - 2 new buildings
+- Reduce saturation levels
 
 ### V0.3:
 - Additional Faction
